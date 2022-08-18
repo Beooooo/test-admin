@@ -8,10 +8,24 @@ import RegisterPage from './pages/Auth/Register';
 import ForgotPasswordPage from './pages/Auth/ForgotPassword';
 import LayoutAdmin from './layout/LayoutAdmin';
 import { AuthProvider } from './components/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <AuthProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='colored'
+      />
       <Routes>
         <Route path='/auth' element={<LayoutAuth />} >
           <Route index element={<LoginPage />} ></Route>
@@ -30,7 +44,7 @@ function App() {
           <Route path='campaign' element={<CampaignPage />}></Route>
         </Route>
       </Routes>
-    </AuthProvider>
+    </AuthProvider >
   );
 }
 

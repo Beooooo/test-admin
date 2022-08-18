@@ -12,7 +12,7 @@ const getLabelLogRequest = (config: AxiosRequestConfig) => {
 };
 
 export const instance = axios.create({
-    baseURL: "https://api.dealmintr.com",
+    baseURL: process.env.REACT_APP_API_ENDPOINT,
     timeout: 10000,
     paramsSerializer: (params) => queryString.stringify(params)
 });
@@ -108,6 +108,10 @@ const axiosClient = {
         return instance.get<any, T>(url, { params, headers });
     },
     async post<T = any, D = Record<string, unknown>>(url: string, data: D, headerConf?: HeaderConf) {
+        const headers = await getHeader(headerConf);
+        return instance.post<any, T>(url, data, { headers });
+    },
+    async postFormData<T = any, D = Record<string, unknown>>(url: string, data: FormData, headerConf?: HeaderConf) {
         const headers = await getHeader(headerConf);
         return instance.post<any, T>(url, data, { headers });
     },

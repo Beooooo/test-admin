@@ -1,6 +1,23 @@
 import { forwardRef, ForwardRefRenderFunction, useImperativeHandle, useState } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import close from '../assets/images/close.png';
+import LayoutCampaign from '../layout/LayoutCampaign';
+import AddPayment from '../pages/AddPayment';
+import CreatNewCompaign from '../pages/AddPayment/CreatNewCompaign';
+import PaymentMethod from '../pages/AddPayment/PaymentMethod';
+import { useStepContext } from './StepContext';
+
+const svgBack = (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 19L3 12M3 12L10 5M3 12H21" stroke="#444444" />
+    </svg>
+)
+
+const svgClose = (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 6L18 18M6 18L18 6L6 18Z" stroke="black" />
+    </svg>
+)
 
 interface Props {
     onClose?(): void,
@@ -12,107 +29,62 @@ export interface ModalFormRef {
 const ModalCampaign: ForwardRefRenderFunction<ModalFormRef, Props> = (props, ref) => {
     const [visible, setVisible] = useState(false);
 
+    const { dataStep, onChangeStep } = useStepContext()
+
     useImperativeHandle(ref, () => ({
         showModal: () => {
             setVisible(true);
         }
     }));
 
+    const renderChildren = () => {
+        switch (dataStep) {
+            case 1:
+                return <CreatNewCompaign />
+            case 2:
+                return <AddPayment />
+            case 3:
+                return <PaymentMethod />
+
+        }
+        return ""
+    }
+
+    const renderTitle = () => {
+        let title = ""
+        switch (dataStep) {
+            case 1:
+                title = "Creat new compaign"
+                break;
+            case 2:
+                title = "Add payment to run your compaign"
+                break;
+            default:
+                title = "Add payment method"
+                break;
+        }
+        return title
+    }
+
+    const onBackStep = (step: number) => {
+        if (step > 0) onChangeStep(step - 1)
+    }
+
     return (
-        <>
-            <Modal show={visible} className='modal-campaign'>
-                <div className='modal-content-campaign'>
-                    <img src={close} alt="close" className='img-close' onClick={() => setVisible(false)} />
-                    <div className='form-create-campaign'>
-                        <div className='title'>
-                            Creat new compaign
-                        </div>
-                        <Form className='mt-4'>
-                            <Row>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Compaign name</Form.Label>
-                                        <Form.Control placeholder="Compaign name" />
-                                    </Form.Group>
-                                </Col>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Nft name</Form.Label>
-                                        <Form.Control placeholder="Nft name" />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
+        <LayoutCampaign visible={visible} setVisible={setVisible}>
+            <div className='modal-content-campaign'>
+                {dataStep > 1
+                    ? <div className='svg-back' onClick={() => onBackStep(dataStep)}>{svgBack}</div>
+                    : ""
+                }
 
-                            <Row>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Symbol</Form.Label>
-                                        <Form.Control placeholder="Symbol" />
-                                    </Form.Group>
-                                </Col>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Royalty</Form.Label>
-                                        <Form.Control placeholder="Royalty" />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Supply of nfts per promo</Form.Label>
-                                        <Form.Select placeholder='Supply of nfts per promo'>
-                                            <option>Supply of nfts per promo</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Col>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Category</Form.Label>
-                                        <Form.Select placeholder='Category'>
-                                            <option>Category</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Label>Upload image</Form.Label>
-                                        <div className="d-create-file">
-                                            <p id="file_name">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</p>
-                                            <div className="browse"><input type="button" id="get_file" className="btn-main" defaultValue="Upload image" /><input id="upload_file" type="file" multiple /></div>
-                                        </div>
-                                        <Form.Text className="text-muted text-image">
-                                            Drag image here or, <span className='text-browser'>browser</span>
-                                        </Form.Text>
-                                    </Form.Group>
-                                </Col>
-                                <Col sx={6}>
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Expiration date</Form.Label>
-                                        <Form.Select placeholder='Expiration date'>
-                                            <option>Expiration date</option>
-                                        </Form.Select>
-                                    </Form.Group>
-
-                                    <Form.Group className="mb-3" >
-                                        <Form.Label>Description</Form.Label>
-                                        <Form.Control as="textarea" rows={3} placeholder="Description" />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-
-                            <Button className='btn-main mt-3' type="submit" style={{ width: 250 }}>
-                                Submit
-                            </Button>
-                        </Form>
-                    </div>
+                <div className='svg-close' onClick={() => setVisible(false)}>{svgClose}</div>
+                <div className='form-create-campaign'>
+                    <div className='title'>{renderTitle()}</div>
+                    {renderChildren()}
                 </div>
-            </Modal>
-        </>
+            </div>
+        </LayoutCampaign>
     )
 }
 

@@ -15,6 +15,10 @@ body {
     height: 100%;
 }
 
+.Toastify__toast-container {
+    width: max-content !important;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -75,25 +79,25 @@ body {
 .layout-auth {
     position: relative;
     left: 10%;
+}
 
-    .oulet-auth {
-        display: flex;
-        align-items: center;
-        gap: 16px;
+.oulet-auth {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 
-        .logo {
-            width: 28px;
-            height: 28px;
-        }
+    .logo {
+        width: 28px;
+        height: 28px;
+    }
 
-        .text-logo {
-            font-family: 'Lexend';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 28px;
-            line-height: 35px;
-            color: #444444;
-        }
+    .text-logo {
+        font-family: 'Lexend';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 35px;
+        color: #444444;
     }
 }
 
@@ -253,7 +257,8 @@ body {
     display: flex;
     gap: 40px;
     justify-content: end;
-    padding: 20px;
+    padding: 19px;
+    background: rgb(73 131 63 / 19%);
 
     .avatar {
         display: flex;
@@ -297,7 +302,7 @@ body {
     font-weight: 700;
     font-size: 30px;
     line-height: 38px;
-    color: #444444;
+    color: #8364e2;
     margin-bottom: 20px;
 }
 
@@ -411,7 +416,7 @@ body {
             font-weight: 500;
             font-size: 16px;
             line-height: 20px;
-            color: #444444;
+            color: #8364e2;
             margin: 5px 0px;
         }
 
@@ -429,7 +434,7 @@ body {
 
 .tab-campaign {
     .bg-tab-campaign {
-        background: #F5F5F5;
+        background: rgb(247, 255, 231);
         border-radius: 6px;
         padding: 20px;
     }
@@ -446,14 +451,14 @@ body {
                 font-style: normal;
                 font-weight: 300;
                 line-height: 25px;
-                color: #444444;
+                color: #8364e2;
                 opacity: 0.6;
                 padding: 15px 0px;
             }
 
             .active-tab {
                 font-weight: 600;
-                border-bottom: 3px solid #444444;
+                border-bottom: 3px solid #8364e2;
                 opacity: 1;
             }
         }
@@ -461,24 +466,30 @@ body {
 }
 
 .box-content-item {
-    background: #FFFFFF;
-    border-radius: 6px;
+    position: relative;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    display: block;
+    border-radius: 20px;
+    transition: .3s;
 
     .image-box-compaign {
         width: 100%;
         height: 160px;
         object-fit: cover;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        -o-border-radius: 6px;
     }
 
     .padding-box {
-        padding: 10px;
+        padding-top: 10px;
     }
 
     .d-flex-between {
-        display: flex;
-        justify-content: space-between;
         border-bottom: 1px solid #80808059;
         padding: 10px 0;
 
@@ -489,6 +500,7 @@ body {
             font-size: 12px;
             line-height: 12px;
             color: #444444;
+            margin-bottom: 5px;
 
             .opacity {
                 opacity: 0.6;
@@ -502,7 +514,7 @@ body {
         font-weight: 500;
         font-size: 16px;
         line-height: 20px;
-        color: #444444;
+        color: #8364e2;
         margin: 5px 0px;
     }
 
@@ -525,11 +537,17 @@ body {
     .modal-content-campaign {
         margin: 60px;
 
-        .img-close {
-            width: 22px;
+        .svg-close {
             position: absolute;
-            top: 10%;
+            top: 3%;
             right: 5%;
+            cursor: pointer;
+        }
+
+        .svg-back {
+            position: absolute;
+            top: 3%;
+            left: 5%;
             cursor: pointer;
         }
 
@@ -550,7 +568,7 @@ body {
 }
 
 .d-create-file {
-    padding: 39px;
+    padding: 70px;
     border-radius: 10px;
     border: dashed 3px #dddddd;
     text-align: center;
@@ -598,6 +616,14 @@ body {
     }
 }
 
+.btn-right {
+    text-align: right;
+
+    button {
+        width: 300px;
+    }
+}
+
 .breadcumb {
     border-radius: 0;
     margin: 0;
@@ -626,4 +652,210 @@ body {
         background-position: center;
         background-size: cover;
     }
+}
+
+.layout-cms {
+    padding: 16px;
+
+    .oulet-auth {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .logo {
+            width: 28px;
+            height: 28px;
+        }
+
+        .text-logo {
+            font-family: 'Lexend';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 28px;
+            line-height: 35px;
+            color: #444444;
+        }
+    }
+}
+
+.content-outlet {
+    padding: 20px;
+}
+
+.text-email {
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+    color: #444444;
+}
+
+.add-payment {
+    .logo-payment {
+        width: 100%;
+        object-fit: cover;
+        height: 135px;
+    }
+
+    .title-payment {
+        font-family: 'Lexend';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        color: #444444;
+    }
+
+    .content-payment {
+        font-family: 'Lexend';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 20px;
+        color: #444444;
+        opacity: 0.6;
+        border-bottom: 1px solid #C8C8C8;
+    }
+
+    .d-flex-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .info {
+        .expiry-date {
+            font-family: 'Lexend';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 18px;
+            color: #444444;
+        }
+
+        .opacity {
+            opacity: 0.6;
+        }
+    }
+
+    .border-payment {
+        opacity: 0.3;
+        border: 1px solid #C8C8C8;
+    }
+
+    .total-payment {
+        .border-total {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #C8C8C8;
+
+            .text {
+                font-family: 'Lexend';
+                font-style: normal;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 20px;
+                color: #444444;
+                opacity: 0.6;
+            }
+
+            .price {
+                font-family: 'Lexend';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                text-align: center;
+                color: #444444;
+            }
+        }
+    }
+}
+
+.payment-method {
+    max-height: 350px;
+    overflow-y: auto;
+
+    .item {
+        margin-bottom: 25px;
+        background: #FFFFFF;
+        border: 1px solid rgba(62, 63, 91, 0.1);
+        border-radius: 4px;
+        position: relative;
+        height: 120px;
+        padding: 10px;
+
+        .text-method {
+            position: absolute;
+            font-family: "Lexend";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+            color: #333333;
+            top: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .info-method {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .item-method {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+
+                .name {
+                    font-family: 'Lexend';
+                    font-style: normal;
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 20px;
+                    color: #333333;
+                }
+            }
+        }
+
+        .card-number {
+            padding: 12px 0px;
+            font-family: 'Lexend';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 20px;
+            color: #444444;
+            opacity: 0.6;
+        }
+
+        .expiry-method {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Lexend';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 18px;
+            color: #444444;
+            opacity: 0.6;
+        }
+    }
+}
+
+.mright-5 {
+    margin-right: 5px;
+}
+
+.box-errors {
+    background: #e74c3c;
+    box-sizing: border-box;
+    border-radius: 4px;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    border: 1px solid #e74b3c;
 }

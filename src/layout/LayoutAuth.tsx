@@ -1,17 +1,13 @@
 import React from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import imageAuth from '../assets/images/image_auth.png';
-import logo from '../assets/images/logo.png';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import bg_auth from '../assets/images/bg_auth.jpg';
-import { useNavigate } from 'react-router-dom'
+import logo from '../assets/images/logo.png';
 import { useAuth } from '../components/AuthContext';
-import { Col, Container, Row } from 'react-bootstrap';
 
 const LayoutAuth: React.FC<{}> = (props) => {
     const navigate = useNavigate()
     const auth = useAuth()
     const location = useLocation()
-    console.log(location.pathname)
 
     if (auth?.dataInfo) {
         return <Navigate to={'/'} state={{ path: location.pathname }} />
@@ -25,12 +21,14 @@ const LayoutAuth: React.FC<{}> = (props) => {
             }}
         >
             <div className="container">
+                <div className='mt-4 mb-4'>
+                    <div className='oulet-auth cursor-pointer' onClick={() => navigate('/')}>
+                        <img src={logo} alt="logo" className='logo' />
+                        <div className='text-logo'>Dealmintr</div>
+                    </div>
+                </div>
                 <div className="row align-items-center">
-                    <div className="col-md-4 layout-auth m-4">
-                        <div className='oulet-auth cursor-pointer' onClick={() => navigate('/')}>
-                            <img src={logo} alt="logo" className='logo' />
-                            <div className='text-logo'>Dealmintr</div>
-                        </div>
+                    <div className="col-md-4 layout-auth mb-4">
                         <Outlet />
                     </div>
                 </div>

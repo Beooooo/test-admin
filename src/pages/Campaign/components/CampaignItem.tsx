@@ -4,7 +4,7 @@ import boxDemo from '../../../assets/images/box_demo.png';
 
 const CampaignItem: React.FC<{}> = (props) => {
     return (
-        <Col xs={4} className="mb-4">
+        <Col xs={4} className="mb-4 hover-box-content-item">
             <div className='box-content-item'>
                 {/* boxDemo */}
                 <img src={"https://dealmintr.com/mock_data/uploads/music_7_b0956a1a6e.jpg"} width={"100%"} className="image-box-compaign" />

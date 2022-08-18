@@ -11,13 +11,14 @@ const imgDefault = (
 function AvatarHeader() {
     const auth = useAuth()
     const navigate = useNavigate()
+    console.log(auth?.dataInfo)
 
     return (
         <div className='avatar'>
             <img src={"https://dealmintr.com/img/author_single/author_thumbnail.jpg"} className="img-avatar" />
             <div className='info-user'>
-                <div className='name'>John Doe</div>
-                <div className='department'>John Doe</div>
+                <div className='name'>{auth?.dataInfo?.data?.name}</div>
+                <div className='department'>{auth?.dataInfo?.data?.email}</div>
             </div>
         </div>
     );

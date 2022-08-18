@@ -1,10 +1,14 @@
-import React, { useRef, useState } from 'react';
-import { Row, Col, NavLink, Button } from 'react-bootstrap';
-import { Link, LinkProps, Navigate, Outlet, useLocation, useMatch, useNavigate, useResolvedPath } from 'react-router-dom'
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef } from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
+import { Link, LinkProps, Navigate, Outlet, useLocation, useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
+import logo from '../assets/images/logo.png';
 import { useAuth } from '../components/AuthContext';
 import AvatarHeader from '../components/AvatarHeader';
 import ModalCampaign, { ModalFormRef } from '../components/ModalCampaign';
-import logo from '../assets/images/logo.png';
+import { StepProvider } from '../components/StepContext';
+import localStorageHelper, { KeyStorage } from '../utils/localStorage';
+import { Session } from '../utils/session';
 
 const iconDashboard = (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +25,6 @@ const iconCampaign = (
 const CustomLink = ({ children, to }: LinkProps) => {
     let { pathname } = useResolvedPath(to)
     let match = useMatch({ path: pathname, end: true })
-    const location = useLocation()
 
     return (
         <Link to={to} className={`menu-list text-decoration-none ${match ? "active-menu" : ""}`}>
@@ -31,21 +34,18 @@ const CustomLink = ({ children, to }: LinkProps) => {
 }
 
 const LayoutAdmin: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate()
     const modalCampaignRef = useRef<ModalFormRef>(null)
 
     const auth = useAuth()
     const location = useLocation()
 
-    // if (!auth?.dataInfo) {
-    //     return <Navigate to={'/auth/login'} state={{ path: location.pathname }} />
-    // }
-
-    const onClickMenu = (event: any) => {
-        const { key } = event
-        navigate(key)
-    }
+    useEffect(() => {
+        const dataSection: Session = localStorageHelper.getObject(KeyStorage.SESSION)
+        if (isEmpty(dataSection)) {
+            navigate('/auth/login', { replace: true })
+        }
+    }, [location.pathname])
 
     const routes = [
         {
@@ -63,10 +63,10 @@ const LayoutAdmin: React.FC = () => {
     return (
         <Row className="menu-layout">
             <Col xs={3} className="bg-menu">
-                <div className='layout-auth mb-2'>
+                <div className='layout-cms mb-2'>
                     <div className='oulet-auth cursor-pointer' onClick={() => navigate('/')}>
                         <img src={logo} alt="logo" className='logo' />
-                        <div className='text-logo'>Dealmintr</div>
+                        <div className='text-logo'>NFTs</div>
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@ const LayoutAdmin: React.FC = () => {
                     )
                 })}
             </Col>
-            <Col xs={9}>
+            <Col xs={9} className="p-0">
                 <div className='header-cms'>
                     <Button className='btn-main' onClick={() => {
                         modalCampaignRef?.current?.showModal()
@@ -97,10 +97,13 @@ const LayoutAdmin: React.FC = () => {
                 <div className='content-outlet'>
                     <Outlet />
                 </div>
-                <ModalCampaign ref={modalCampaignRef} />
+
+                <StepProvider>
+                    <ModalCampaign ref={modalCampaignRef} />
+                </StepProvider>
             </Col>
         </Row>
     );
 };
 
-export default LayoutAdmin;
+export default React.memo(LayoutAdmin);
